@@ -211,14 +211,44 @@ select_best_server() {
     echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 }
 
+# 安装bc计算器
+install_bc() {
+    echo -e "${YELLOW}正在自动安装 bc 计算器...${NC}"
+    
+    if command -v apt-get &> /dev/null; then
+        sudo apt-get update && sudo apt-get install -y bc
+    elif command -v yum &> /dev/null; then
+        sudo yum install -y bc
+    elif command -v dnf &> /dev/null; then
+        sudo dnf install -y bc
+    elif command -v brew &> /dev/null; then
+        brew install bc
+    elif command -v pacman &> /dev/null; then
+        sudo pacman -S --noconfirm bc
+    else
+        echo -e "${RED}错误: 无法自动安装 bc，请手动安装后重试${NC}"
+        echo "Ubuntu/Debian: sudo apt-get install bc"
+        echo "CentOS/RHEL: sudo yum install bc"
+        echo "macOS: brew install bc"
+        echo "Arch Linux: sudo pacman -S bc"
+        exit 1
+    fi
+    
+    if command -v bc &> /dev/null; then
+        echo -e "${GREEN}✅ bc 安装成功${NC}"
+    else
+        echo -e "${RED}❌ bc 安装失败，请手动安装后重试${NC}"
+        exit 1
+    fi
+}
+
 # 主函数
 main() {
-    # 检查依赖
+    # 检查并安装依赖
     if ! command -v bc &> /dev/null; then
-        echo -e "${RED}错误: 需要安装 bc 计算器${NC}"
-        echo "请运行: sudo apt-get install bc (Ubuntu/Debian)"
-        echo "       或 yum install bc (CentOS/RHEL)"
-        exit 1
+        echo -e "${YELLOW}⚠️  未检测到 bc 计算器，正在自动安装...${NC}"
+        install_bc
+        echo
     fi
     
     draw_header
