@@ -88,8 +88,14 @@ ping_server() {
         printf "\r"
         draw_test_progress $((i-1)) $count
         
-        # 执行ping命令，超时时间3秒
-        result=$(ping -c 1 -W 3000 $host 2>/dev/null | grep "time=")
+        # 执行ping命令，超时时间3秒（跨平台兼容）
+        if [[ "$OSTYPE" == "darwin"* ]]; then
+            # macOS使用-t参数设置超时
+            result=$(ping -c 1 -t 3 $host 2>/dev/null | grep "time=")
+        else
+            # Linux使用-W参数设置超时（秒）
+            result=$(ping -c 1 -W 3 $host 2>/dev/null | grep "time=")
+        fi
         
         if [[ $result =~ time=([0-9.]+) ]]; then
             latency=${BASH_REMATCH[1]}
