@@ -111,9 +111,7 @@ ping_server() {
                 printf "\r"
                 draw_test_progress $count $count
                 printf " ${RED}[连续超时，跳过剩余测试]${NC}\n"
-                # 将剩余的测试都标记为超时
-                local remaining=$((count - i))
-                loss=$((loss + remaining))
+                # 直接跳出循环，不再增加loss计数
                 break
             fi
         fi
@@ -127,12 +125,20 @@ ping_server() {
     printf "                         \n"
     
     # 计算结果
+    local actual_tests=$((valid_pings + loss))  # 实际执行的测试次数
+    
     if [ $valid_pings -gt 0 ]; then
         avg_latency[$region]=$(echo "scale=2; $total_time / $valid_pings" | bc -l)
     else
         avg_latency[$region]=999999
     fi
-    packet_loss[$region]=$(echo "scale=1; $loss * 100 / $count" | bc -l)
+    
+    # 基于实际测试次数计算丢包率
+    if [ $actual_tests -gt 0 ]; then
+        packet_loss[$region]=$(echo "scale=1; $loss * 100 / $actual_tests" | bc -l)
+    else
+        packet_loss[$region]=100.0
+    fi
     
     # 显示结果
     if [ $valid_pings -gt 0 ]; then
