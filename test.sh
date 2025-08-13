@@ -80,20 +80,36 @@ ping_server() {
     
     printf "${WHITE}正在测试 $region ($host)...${NC}\n"
     
+    # 连续超时计数
+    local consecutive_timeouts=0
+    
     # 进度指示器
     for i in $(seq 1 $count); do
         printf "\r"
         draw_test_progress $((i-1)) $count
         
-        # 执行ping命令
-        result=$(ping -c 1 -W 2000 $host 2>/dev/null | grep "time=")
+        # 执行ping命令，超时时间3秒
+        result=$(ping -c 1 -W 3000 $host 2>/dev/null | grep "time=")
         
         if [[ $result =~ time=([0-9.]+) ]]; then
             latency=${BASH_REMATCH[1]}
             total_time=$(echo "$total_time + $latency" | bc -l)
             ((valid_pings++))
+            consecutive_timeouts=0  # 重置连续超时计数
         else
             ((loss++))
+            ((consecutive_timeouts++))
+            
+            # 连续3次超时则直接跳出
+            if [ $consecutive_timeouts -ge 3 ]; then
+                printf "\r"
+                draw_test_progress $count $count
+                printf " ${RED}[连续超时，跳过剩余测试]${NC}\n"
+                # 将剩余的测试都标记为超时
+                local remaining=$((count - i))
+                loss=$((loss + remaining))
+                break
+            fi
         fi
         
         sleep 0.1
