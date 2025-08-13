@@ -1,13 +1,20 @@
 #!/bin/bash
 
 # 服务器列表（保持顺序）
-declare -a regions=("香港" "日本" "新加坡" "上海" "北京")
+declare -a regions=("hk" "jp" "sg" "sh" "bj")
+declare -A region_names=(
+    ["hk"]="香港"
+    ["jp"]="日本" 
+    ["sg"]="新加坡"
+    ["sh"]="上海"
+    ["bj"]="北京"
+)
 declare -A servers=(
-    ["香港"]="hk.instcopilot-api.com"
-    ["日本"]="jp.instcopilot-api.com"
-    ["新加坡"]="sg.instcopilot-api.com"
-    ["上海"]="sh.instcopilot-api.com"
-    ["北京"]="bj.instcopilot-api.com"
+    ["hk"]="hk.instcopilot-api.com"
+    ["jp"]="jp.instcopilot-api.com"
+    ["sg"]="sg.instcopilot-api.com"
+    ["sh"]="sh.instcopilot-api.com"
+    ["bj"]="bj.instcopilot-api.com"
 )
 
 # 颜色定义
@@ -78,7 +85,7 @@ ping_server() {
     local total_time=0
     local valid_pings=0
     
-    printf "${WHITE}正在测试 $region ($host)...${NC}\n"
+    printf "${WHITE}正在测试 ${region_names[$region]} ($host)...${NC}\n"
     
     # 连续超时计数
     local consecutive_timeouts=0
@@ -142,10 +149,10 @@ ping_server() {
     
     # 显示结果
     if [ $valid_pings -gt 0 ]; then
-        printf "${GREEN}  ✓ $region: 平均延迟 %.2fms, 丢包率 %.1f%%${NC}\n\n" \
+        printf "${GREEN}  ✓ ${region_names[$region]}: 平均延迟 %.2fms, 丢包率 %.1f%%${NC}\n\n" \
             "${avg_latency[$region]}" "${packet_loss[$region]}"
     else
-        printf "${RED}  ✗ $region: 连接失败${NC}\n\n"
+        printf "${RED}  ✗ ${region_names[$region]}: 连接失败${NC}\n\n"
     fi
 }
 
@@ -205,7 +212,7 @@ select_best_server() {
             fi
             
             printf "${color}%-8s${NC} %-30s ${color}%10.2fms${NC}   %6.1f%%\n" \
-                "$region" "$host" "$avg" "$loss"
+                "${region_names[$region]}" "$host" "$avg" "$loss"
             
             if (( $(echo "$score < $best_score" | bc -l) )); then
                 best_score=$score
@@ -213,14 +220,14 @@ select_best_server() {
             fi
         else
             printf "${RED}%-8s${NC} %-30s ${RED}连接失败${NC}       --\n" \
-                "$region" "$host"
+                "${region_names[$region]}" "$host"
         fi
     done
     
     echo -e "${BLUE}────────────────────────────────────────────────────────────────${NC}"
     
     if [ -n "$best_region" ]; then
-        echo -e "${GREEN}🏆 推荐服务器: $best_region (${servers[$best_region]})${NC}"
+        echo -e "${GREEN}🏆 推荐服务器: ${region_names[$best_region]} (${servers[$best_region]})${NC}"
         echo -e "${GREEN}   平均延迟: ${avg_latency[$best_region]}ms, 丢包率: ${packet_loss[$best_region]}%${NC}"
         echo
         # 询问是否更新配置
@@ -283,7 +290,7 @@ main() {
     
     echo -e "${CYAN}📡 准备测试以下服务器:${NC}"
     for region in "${regions[@]}"; do
-        echo -e "   ${WHITE}$region${NC}: ${servers[$region]}"
+        echo -e "   ${WHITE}${region_names[$region]}${NC}: ${servers[$region]}"
     done
     echo
     
