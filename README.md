@@ -83,7 +83,7 @@ bash <(curl -sSL https://raw.githubusercontent.com/zhiqing0205/InstCopilot-Ping-
 - **香港**: hk.instcopilot-api.com
 - **日本**: jp.instcopilot-api.com
 - **新加坡**: sg.instcopilot-api.com
-- **大陆**: cn.instcopilot-api.com
+- **大陆**: instcopilot-api.yinban.online
 
 ## 🤝 贡献
 

@@ -83,7 +83,7 @@ The script automatically updates the `ANTHROPIC_BASE_URL` configuration in the `
 - **Hong Kong**: hk.instcopilot-api.com
 - **Japan**: jp.instcopilot-api.com
 - **Singapore**: sg.instcopilot-api.com
-- **Mainland China**: cn.instcopilot-api.com
+- **Mainland China**: instcopilot-api.yinban.online
 
 ## 🤝 Contributing
 

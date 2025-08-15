@@ -12,7 +12,7 @@ declare -A servers=(
     ["hk"]="hk.instcopilot-api.com"
     ["jp"]="jp.instcopilot-api.com"
     ["sg"]="sg.instcopilot-api.com"
-    ["cn"]="cn.instcopilot-api.com"
+    ["cn"]="instcopilot-api.yinban.online"
 )
 
 # 颜色定义
