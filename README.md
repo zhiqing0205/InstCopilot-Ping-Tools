@@ -8,7 +8,7 @@ InstCopilot Ping Tools 是一个网络延迟测试工具，专为优化 Claude A
 
 ## ✨ 主要功能
 
-- 🌐 **多节点测试**: 同时测试香港、日本、新加坡、上海、北京等多个服务器节点
+- 🌐 **多节点测试**: 同时测试香港、日本、新加坡、大陆等多个服务器节点
 - 📊 **详细统计**: 显示平均延迟、丢包率等关键网络指标
 - 🎯 **智能推荐**: 基于延迟和丢包率综合评分，自动推荐最优服务器
 - ⚙️ **自动配置**: 可自动更新 Claude 配置文件中的 base_url
@@ -83,8 +83,7 @@ bash <(curl -sSL https://raw.githubusercontent.com/zhiqing0205/InstCopilot-Ping-
 - **香港**: hk.instcopilot-api.com
 - **日本**: jp.instcopilot-api.com
 - **新加坡**: sg.instcopilot-api.com
-- **上海**: sh.instcopilot-api.com
-- **北京**: bj.instcopilot-api.com
+- **大陆**: cn.instcopilot-api.com
 
 ## 🤝 贡献
 
