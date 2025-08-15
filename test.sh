@@ -1,18 +1,20 @@
 #!/bin/bash
 
 # 服务器列表（保持顺序）
-declare -a regions=("hk" "jp" "sg" "cn")
+declare -a regions=("cn1" "cn2" "hk" "jp" "sg")
 declare -A region_names=(
+    ["cn1"]="大陆1"
+    ["cn2"]="大陆2"
     ["hk"]="香港"
     ["jp"]="日本" 
     ["sg"]="新加坡"
-    ["cn"]="大陆"
 )
 declare -A servers=(
+    ["cn1"]="cn1.instcopilot-api.com"
+    ["cn2"]="cn2.instcopilot-api.com"
     ["hk"]="hk.instcopilot-api.com"
     ["jp"]="jp.instcopilot-api.com"
     ["sg"]="sg.instcopilot-api.com"
-    ["cn"]="instcopilot-api.yinban.online"
 )
 
 # 颜色定义

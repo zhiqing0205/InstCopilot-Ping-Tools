@@ -8,7 +8,7 @@ InstCopilot Ping Tools is a network latency testing tool designed to optimize Cl
 
 ## ✨ Key Features
 
-- 🌐 **Multi-node Testing**: Test multiple server nodes including Hong Kong, Japan, Singapore, and Mainland China
+- 🌐 **Multi-node Testing**: Test multiple server nodes including Mainland China 1, Mainland China 2, Hong Kong, Japan, and Singapore
 - 📊 **Detailed Statistics**: Display key network metrics like average latency and packet loss rate
 - 🎯 **Smart Recommendations**: Automatically recommend the best server based on comprehensive scoring of latency and packet loss
 - ⚙️ **Auto Configuration**: Automatically update base_url in Claude configuration files
@@ -80,10 +80,11 @@ The script automatically updates the `ANTHROPIC_BASE_URL` configuration in the `
 
 ## 🌐 Test Nodes
 
+- **Mainland China 1**: cn1.instcopilot-api.com
+- **Mainland China 2**: cn2.instcopilot-api.com
 - **Hong Kong**: hk.instcopilot-api.com
 - **Japan**: jp.instcopilot-api.com
 - **Singapore**: sg.instcopilot-api.com
-- **Mainland China**: instcopilot-api.yinban.online
 
 ## 🤝 Contributing
 
